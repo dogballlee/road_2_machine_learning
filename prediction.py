@@ -183,3 +183,33 @@ model_xgb.fit(train_x_head, Y)
 # score = rmsle_cv(model_lgb)
 # print("LGBM 得分: {:.4f} ({:.4f})\n" .format(score.mean(), score.std()))
 # =============================================================================
+
+# 简单模型融合
+class AveragingModels(BaseEstimator, RegressorMixin, TransformerMixin):
+    def __init__(self, models):
+        self.models = models
+
+    # 遍历所有模型，拟合数据
+    def fit(self, X, y):
+        self.models_ = [clone(x) for x in self.models]
+
+        for model in self.models_:
+            model.fit(X, y)
+
+        return self
+
+    # 预估，并对预估结果值做average
+    def predict(self, X):
+        predictions = np.column_stack([
+            model.predict(X) for model in self.models_
+        ])
+        # return 0.85*predictions[:,0]+0.15*predictions[:,1]
+        # return 0.7*predictions[:,0]+0.15*predictions[:,1]+0.15*predictions[:,2]
+        return np.mean(predictions, axis=1)
+        # averaged_models = AveragingModels(models = (lasso,KRR))
+
+
+averaged_models = AveragingModels(models=(svr, KRR2, model_xgb))
+
+score = rmsle_cv(averaged_models)
+print(" 对基模型集成后的得分: {:.4f} ({:.4f})\n".format(score.mean(), score.std()))
