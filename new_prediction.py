@@ -1,26 +1,53 @@
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
-"""from sklearn import feature_selection"""
+from sklearn.feature_selection import VarianceThreshold
 from sklearn import decomposition
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model as sk_linear
 from sklearn.metrics import mean_squared_error
+import math
 
 
 # 导入数据
-path = 'C:/Users/Administrator/Desktop/'
+path = 'C:/Users/Administrator/Desktop/steam_prediction/'
 train = pd.read_csv(path + 'zhengqi_train.txt', sep='\t')
 test = pd.read_csv(path + 'zhengqi_test.txt', sep='\t')
+
 train_X = train.drop(['target'], axis=1)
-train_X.drop(['V5', 'V9', 'V11', 'V17', 'V22', 'V28'], axis=1)
-test.drop(['V5', 'V9', 'V11', 'V17', 'V22', 'V28'], axis=1)
 train_Y = train['target']
 
-
 # 特征工程
-# min_max_scale = preprocessing.minmax_scale
-# dataminmax = pd.DataFrame(min_max_scale.fit(all_data), columns=all_data.columns)
+all_data = pd.concat([train_X, test])
+
+min_max_scale = preprocessing.minmax_scale
+all_data = pd.DataFrame(min_max_scale(all_data), columns=all_data.columns)
+
+all_data['V0'] = all_data['V0'].apply(lambda x: math.exp(x))
+all_data['V1'] = all_data['V1'].apply(lambda x: math.exp(x))
+all_data['V4'] = all_data['V4'].apply(lambda x: math.exp(x))
+all_data['V6'] = all_data['V6'].apply(lambda x: math.exp(x))
+all_data['V7'] = all_data['V7'].apply(lambda x: math.exp(x))
+all_data['V8'] = all_data['V8'].apply(lambda x: math.exp(x))
+all_data['V12'] = all_data['V12'].apply(lambda x: math.exp(x))
+all_data['V16'] = all_data['V16'].apply(lambda x: math.exp(x))
+all_data['V26'] = all_data['V26'].apply(lambda x: math.exp(x))
+all_data['V27'] = all_data['V27'].apply(lambda x: math.exp(x))
+all_data["V30"] = np.log1p(all_data["V30"])
+
+all_data.drop(['V5', 'V9', 'V11', 'V17', 'V22', 'V28'], axis=1)
+scaled = pd.DataFrame(preprocessing.scale(all_data), columns=all_data.columns)
+
+train_X = scaled.loc[0:len(train) - 1]
+test = scaled.loc[len(train):]
+
+threshold = 0.85
+vt = VarianceThreshold().fit(train_X)
+
+feat_var_threshold = train_X.columns[vt.variances_ > threshold * (1-threshold)]
+train_X = train_X[feat_var_threshold]
+test = test[feat_var_threshold]
+# all_data = pd.concat([train_X, X_test])
 
 pca = decomposition.PCA(n_components=0.97, whiten='True', svd_solver='full')
 pca.fit(train_X)
