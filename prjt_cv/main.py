@@ -26,7 +26,7 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 #
 # img = cv2.imread(im_path)
 # imgGray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)    #转换为灰度图,opencv的颜色格式是BGR，不是传统的RGB
-# imgBlur = cv2.GaussianBlur(imgGray,(9,9),0)    #高斯模糊，需要定义核大小，必须是奇数。核值越大越模糊
+# imgBlur = cv2.GaussianBlur(imgGray,(9,9),1)    #高斯模糊，需要定义核大小，必须是奇数。核值越大越模糊
 # imgCanny = cv2.Canny(imgGray,150,200)    #轮廓图，数值越大轮廓线越少
 # imgDilation = cv2.dilate(imgGray,kernel,iterations=1)    #膨胀操作，使用kernel滑过整张图，可以连通白色区域的边界，迭代次数越多，白色区域越大。类似的有腐蚀操作erode可以用来去除毛边
 # imgEroded = cv2.erode(imgDilation,kernel,iterations=1)      #腐蚀操作
@@ -67,7 +67,7 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 # cv2.waitKey(0)
 
 
-#图像拉伸,
+#图像拉伸,把歪歪的图拉直
 # img = cv2.imread(im_path)
 # # print(img.shape)
 # width,height = 350,350
@@ -93,36 +93,61 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 
 
 #颜色检测&trackbars(滑窗)将图片从VGR转换到HSV颜色空间
-def empty(a):
-    pass
+# def empty(a):
+#     pass
+#
+# cv2.namedWindow("trackbars")    #命名一个窗口为trackbar
+# cv2.resizeWindow("trackbars",640,240)     #调整窗口trackbar大小
+# cv2.createTrackbar("hue_min","trackbars",7,255,empty)      #创建一个trackbar，通过滑动条来改变参数，此行为色度下限，以上数值为运行程序后手工填写的，用来过滤颜色
+# cv2.createTrackbar("hue_max","trackbars",18,255,empty)     #此行为色度上限
+# cv2.createTrackbar("sat_min","trackbars",49,255,empty)       #此行为饱和度下限
+# cv2.createTrackbar("sat_max","trackbars",255,255,empty)     #此行为饱和度上限
+# cv2.createTrackbar("val_min","trackbars",102,255,empty)       #此行为值下限
+# cv2.createTrackbar("val_max","trackbars",255,255,empty)     #此行为值上限
+#
+# while True:
+#     img = cv2.imread(im_path)
+#     imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)    #从BGR到HSV
+#
+#     h_min = cv2.getTrackbarPos("hue_min", "trackbars")      #创建一组滑窗
+#     h_max = cv2.getTrackbarPos("hue_max", "trackbars")
+#     s_min = cv2.getTrackbarPos("sat_min", "trackbars")
+#     s_max = cv2.getTrackbarPos("sat_max", "trackbars")
+#     v_min = cv2.getTrackbarPos("val_min", "trackbars")
+#     v_max = cv2.getTrackbarPos("val_max", "trackbars")
+#
+#     lower = np.array([h_min,s_min,v_min])       #创建蒙版下界
+#     upper = np.array([h_max,s_max,v_max])     #创建蒙版上界
+#     mask = cv2.inRange(imgHSV,lower,upper)      #创建蒙版，原图,下界（低于该值会被置为0）,上界（高于该值会被置为0）
+#     imgresult = cv2.bitwise_and(img,img,mask=mask)      #将蒙版叠加在原图上，达到筛选某颜色的目的
+#
+#     # cv2.imshow("original",img)
+#     # cv2.imshow("HSV",imgHSV)
+#     cv2.imshow("mask",mask)
+#     cv2.imshow("imgresult", imgresult)
+#     cv2.waitKey(1)
 
-cv2.namedWindow("trackbars")    #命名一个窗口为trackbar
-cv2.resizeWindow("trackbars",640,240)     #调整窗口trackbar大小
-cv2.createTrackbar("hue_min","trackbars",8,255,empty)      #创建一个trackbar，通过滑动条来改变参数，此行为色度下限，以上数值为运行程序后手工填写的，用来过滤颜色
-cv2.createTrackbar("hue_max","trackbars",124,255,empty)     #此行为色度上限
-cv2.createTrackbar("sat_min","trackbars",103,255,empty)       #此行为饱和度下限
-cv2.createTrackbar("sat_max","trackbars",204,255,empty)     #此行为饱和度上限
-cv2.createTrackbar("val_min","trackbars",0,255,empty)       #此行为值下限
-cv2.createTrackbar("val_max","trackbars",255,255,empty)     #此行为值上限
 
-while True:
-    img = cv2.imread(im_path)
-    imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)    #从BGR到HSV
+#形状检测
+img = cv2.imread(im_path)
+imggray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+imgblur = cv2.GaussianBlur(imggray,(3,3),1)
+imgcanny = cv2.Canny(imgblur,50,50)
+sss = np.hstack((imgblur,imgblur))
+sss = np.hstack((sss,imgcanny))
 
-    h_min = cv2.getTrackbarPos("hue_min", "trackbars")      #创建一组滑窗
-    h_max = cv2.getTrackbarPos("hue_max", "trackbars")
-    s_min = cv2.getTrackbarPos("sat_min", "trackbars")
-    s_max = cv2.getTrackbarPos("sat_max", "trackbars")
-    v_min = cv2.getTrackbarPos("val_min", "trackbars")
-    v_max = cv2.getTrackbarPos("val_max", "trackbars")
+def getcontours(img):
+    contours,hierarchy = cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
 
-    lower = np.array([h_min,s_min,v_min])       #创建蒙版下界
-    upper = np.array([h_max,s_max,v_max])     #创建蒙版上界
-    mask = cv2.inRange(imgHSV,lower,upper)      #创建蒙版，原图,下界（低于该值会被置为0）,上界（高于该值会被置为0）
-    imgresult = cv2.bitwise_and(img,img,mask=mask)      #将蒙版叠加在原图上，达到筛选某颜色的目的
 
-    # cv2.imshow("original",img)
-    # cv2.imshow("HSV",imgHSV)
-    cv2.imshow("mask",mask)
-    cv2.imshow("imgresult", imgresult)
-    cv2.waitKey(1)
+
+# cv2.imshow("original",img)
+# cv2.imshow("gray",imggray)
+# cv2.imshow("blur",imgblur)
+# cv2.imshow("canny",imgcanny)
+cv2.imshow("sss",sss)
+
+
+
+cv2.waitKey(0)
+
