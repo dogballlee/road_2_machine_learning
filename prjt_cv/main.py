@@ -1,8 +1,11 @@
 import cv2
 import numpy as np
 
-im_path = r'D:\\download\\material\\02.jpg'
-vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'
+im_path = r'D:\\download\\material\\02.jpg'     #zsanett妹妹真美
+# im_path = r'D:\download\\face.jpg'    #边缘检测使用这张图像
+things_dtct_path = r'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python37\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml'
+#opencv用以检测物体的自带xml文件(训练好的分类器)，诸如人脸、猫咪、狗子、眼睛等
+vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'       #骚货CHANEL的用餐视频，太鸡巴骚了
 
 
 #读取图片
@@ -128,26 +131,95 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 #     cv2.waitKey(1)
 
 
-#形状检测
+#形状检测，用于检查图像中的标准图形，诸如正方形、矩形、三角、圆等
+
+# def stackImages(scale,imgArray):        #定义了一个堆叠显示图像的函数
+#     rows = len(imgArray)
+#     cols = len(imgArray[0])
+#     rowsAvailable = isinstance(imgArray[0], list)
+#     width = imgArray[0][0].shape[1]
+#     height = imgArray[0][0].shape[0]
+#     if rowsAvailable:
+#         for x in range ( 0, rows):
+#             for y in range(0, cols):
+#                 if imgArray[x][y].shape[:2] == imgArray[0][0].shape [:2]:
+#                     imgArray[x][y] = cv2.resize(imgArray[x][y], (0, 0), None, scale, scale)
+#                 else:
+#                     imgArray[x][y] = cv2.resize(imgArray[x][y], (imgArray[0][0].shape[1], imgArray[0][0].shape[0]), None, scale, scale)
+#                 if len(imgArray[x][y].shape) == 2: imgArray[x][y]= cv2.cvtColor( imgArray[x][y], cv2.COLOR_GRAY2BGR)
+#         imageBlank = np.zeros((height, width, 3), np.uint8)
+#         hor = [imageBlank]*rows
+#         hor_con = [imageBlank]*rows
+#         for x in range(0, rows):
+#             hor[x] = np.hstack(imgArray[x])
+#         ver = np.vstack(hor)
+#     else:
+#         for x in range(0, rows):
+#             if imgArray[x].shape[:2] == imgArray[0].shape[:2]:
+#                 imgArray[x] = cv2.resize(imgArray[x], (0, 0), None, scale, scale)
+#             else:
+#                 imgArray[x] = cv2.resize(imgArray[x], (imgArray[0].shape[1], imgArray[0].shape[0]), None,scale, scale)
+#             if len(imgArray[x].shape) == 2: imgArray[x] = cv2.cvtColor(imgArray[x], cv2.COLOR_GRAY2BGR)
+#         hor= np.hstack(imgArray)
+#         ver = hor
+#     return ver
+#
+# def getcontours(img):       #定义了一个寻找图像轮廓的函数
+#     contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+#     for cnt in contours:
+#         area = cv2.contourArea(cnt)
+#         print(area)
+#         if area > 500:
+#             cv2.drawContours(imgcontour, cnt, -1, (255, 0, 0), 3)
+#             peri = cv2.arcLength(cnt, True)     #图像中各个闭合的标准图形的轮廓长度
+#             # print(peri)
+#             approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)       #各个轮廓的拐点数
+#             print(len(approx))
+#             objCor = len(approx)
+#             x, y, w, h = cv2.boundingRect(approx)       #用矩形框框选出发现的轮廓
+#
+#             if objCor == 3:
+#                 objectType = "Tri"
+#             elif objCor == 4:
+#                 aspRatio = w / float(h)
+#                 if aspRatio > 0.98 and aspRatio < 1.03:
+#                     objectType = "Square"
+#                 else:
+#                     objectType = "Rectangle"
+#             elif objCor > 4:
+#                 objectType = "Circles"
+#             else:
+#                 objectType = "None"
+#
+#             cv2.rectangle(imgcontour, (x, y), (x + w, y + h), (0, 255, 0), 2)
+#             cv2.putText(imgcontour, objectType,
+#                         (x + (w // 2) - 10, y + (h // 2) - 10), cv2.FONT_HERSHEY_COMPLEX, 0.7,
+#                         (0, 0, 0), 2)
+#
+# img = cv2.imread(im_path)
+# imgcontour = img.copy()
+# imggray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+# imgblur = cv2.GaussianBlur(imggray,(3,3),1)
+# imgcanny = cv2.Canny(imgblur,50,50)
+# getcontours(imgcanny)
+#
+# imgblank = np.zeros_like(img)
+# imgstack = stackImages(0.5,([img,imggray,imgblur],
+#                             [imgcanny,imgcontour,imgblank]))
+#
+# cv2.imshow("Stack",imgstack)
+# cv2.waitKey(0)
+
+
+#人脸识别
+facecascade = cv2.CascadeClassifier(things_dtct_path)
 img = cv2.imread(im_path)
 imggray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-imgblur = cv2.GaussianBlur(imggray,(3,3),1)
-imgcanny = cv2.Canny(imgblur,50,50)
-sss = np.hstack((imgblur,imgblur))
-sss = np.hstack((sss,imgcanny))
+faces = facecascade.detectMultiScale(imggray,1.1,20)     #表示每次图像尺寸减小的比例1.1;每一个目标至少要被检测到20次才算是真的目标(因为周围的像素和不同的窗口大小都可以检测到人脸)
 
-def getcontours(img):
-    contours,hierarchy = cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+for (x,y,w,h) in faces:
+    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
 
-
-
-# cv2.imshow("original",img)
-# cv2.imshow("gray",imggray)
-# cv2.imshow("blur",imgblur)
-# cv2.imshow("canny",imgcanny)
-cv2.imshow("sss",sss)
-
-
-
+cv2.imshow("result",img)
+# cv2.imshow("result-G",imggray)
 cv2.waitKey(0)
-
