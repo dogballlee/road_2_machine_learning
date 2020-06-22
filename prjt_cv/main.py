@@ -5,7 +5,7 @@ im_path = r'D:\\download\\material\\02.jpg'     #zsanett妹妹真美
 # im_path = r'D:\download\\face.jpg'    #边缘检测使用这张图像
 things_dtct_path = r'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python37\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml'
 #opencv用以检测物体的自带xml文件(训练好的分类器)，诸如人脸、猫咪、狗子、眼睛等
-vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'       #骚货CHANEL的用餐视频，太鸡巴骚了
+vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'       #CHANEL的用餐视频，老美食家了
 
 
 #读取图片
@@ -15,7 +15,7 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 
 
 #q读取视频，此处为MP4
-# vid = cv2.VideoCapture(vid_path)
+# vid = cv2.VideoCapture(vid_path)      #如果参数填0，就会调用默认的摄像头(如果你的机器有摄像头的话)
 #
 # while True:
 #     success,img = vid.read()
@@ -110,7 +110,7 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 #
 # while True:
 #     img = cv2.imread(im_path)
-#     imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)    #从BGR到HSV
+#     imgHSV = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)    #从BGR到HSV，HSV(色调 Hue,饱和度 Saturation,亮度 Value)，相较于BGR空间，HSV空间的识别的范围更广，更方便
 #
 #     h_min = cv2.getTrackbarPos("hue_min", "trackbars")      #创建一组滑窗
 #     h_max = cv2.getTrackbarPos("hue_max", "trackbars")
@@ -212,7 +212,7 @@ vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5
 
 
 #人脸识别
-facecascade = cv2.CascadeClassifier(things_dtct_path)
+facecascade = cv2.CascadeClassifier(things_dtct_path)       #级联分类器
 img = cv2.imread(im_path)
 imggray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 faces = facecascade.detectMultiScale(imggray,1.1,20)     #表示每次图像尺寸减小的比例1.1;每一个目标至少要被检测到20次才算是真的目标(因为周围的像素和不同的窗口大小都可以检测到人脸)
@@ -223,3 +223,7 @@ for (x,y,w,h) in faces:
 cv2.imshow("result",img)
 # cv2.imshow("result-G",imggray)
 cv2.waitKey(0)
+
+
+#使用摄像头实现某一色彩的追踪和轮廓检测（我莫得摄像头，不敲了）
+
