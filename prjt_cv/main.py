@@ -5,7 +5,7 @@ im_path = r'D:\\download\\material\\02.jpg'     #zsanett妹妹真美
 # im_path = r'D:\download\\face.jpg'    #边缘检测使用这张图像
 things_dtct_path = r'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python37\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml'
 #opencv用以检测物体的自带xml文件(训练好的分类器)，诸如人脸、猫咪、狗子、眼睛等
-vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'       #CHANEL的用餐视频，老美食家了
+vid_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'       #CHANEL进餐，老美食家了
 
 
 #读取图片
