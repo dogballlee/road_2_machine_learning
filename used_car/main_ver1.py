@@ -18,6 +18,7 @@ warnings.filterwarnings('ignore')
 
 path = r'D:\\py_project\\used_car\\'
 output_path = r'D:\\py_project\\used_car\\user_data\\'
+tree_data_path = r'D:\\py_project\\used_car\\user_data\\'
 p_output_path = r'D:\\py_project\\used_car\\prediction_result\\'
 train = path + 'used_car_train_20200313.csv'
 test = path + 'used_car_testB_20200421.csv'
@@ -27,6 +28,11 @@ Test_data = pd.read_csv(test, sep=' ')
 # print(train_data.shape)
 # print(test_data.shape)
 df = pd.concat([Train_data,Test_data], ignore_index=True)
+
+
+df['name_count'] = df.groupby(['name'])['SaleID'].transform('count')
+del df['name']
+
 df.drop(df[df['seller'] == 1].index, inplace=True)
 del df['offerType']
 del df['seller']
@@ -342,13 +348,16 @@ print('树模型数据已经准备完毕~~~~~~~')
 '''
 ——————————————————————以下为神经网络的数据处理——————————————————————
 '''
-feature = ['model','brand','bodyType','fuelType','kilometer','notRepairedDamage','power','regDate_month','creatDate_year','creatDate_month'
-    ,'v_0', 'v_1', 'v_2', 'v_3', 'v_4', 'v_5', 'v_6',
-       'v_7', 'v_8', 'v_9', 'v_10', 'v_11', 'v_12', 'v_13', 'v_14','car_age_day','car_age_year','regDate_year','name_count']
+
+
+# 合并方便后面的操作
+df = pd.concat([Train_data, Test_data], ignore_index=True)
+
+feature = ['model','brand','bodyType','fuelType','kilometer','notRepairedDamage','power','regDate_month','creatDate_year','creatDate_month' ,'v_0', 'v_1', 'v_2', 'v_3', 'v_4', 'v_5', 'v_6', 'v_7', 'v_8', 'v_9', 'v_10', 'v_11', 'v_12', 'v_13', 'v_14','car_age_day','car_age_year','regDate_year','name_count']
 
 
 #处理异常数据
-# df.drop(df[df['seller'] == 1].index, inplace=True)
+df.drop(df[df['seller'] == 1].index, inplace=True)
 #记录一下df的price
 df_copy = df
 
@@ -385,7 +394,8 @@ df['car_age_day'] = (df['creatDates'] - df['regDates']).dt.days
 df['car_age_year'] = round(df['car_age_day'] / 365, 1)
 
 #对name进行挖掘
-df['name_count'] = df.groupby(['name'])['SaleID'].transform('count')
+df['name_count'] = df.groupby(df['name'])['SaleID'].transform('count')
+
 
 #填充众数
 df.fillna(df.median(),inplace= True)
@@ -398,7 +408,7 @@ df= scaler.transform(df[feature].values)
 
 
 ## 切割数据,导出数据,作为神经网络的训练数据
-# output_path = path + 'user_data\\'
+# output_path = path + r'\\user_data\\'
 nn_data = pd.DataFrame(df,columns=feature)
 nn_data['price']= np.array(df_copy['price'])
 nn_data['SaleID']= np.array(df_copy['SaleID'])
@@ -412,9 +422,9 @@ print('NN模型数据已经准备完毕~~~~~~~')
 
 #读取模型
 path = os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + ".")
-tree_data_path = path+'user_data\\'
+# tree_data_path = path+ r'\\user_data\\'
 Train_data = pd.read_csv(tree_data_path+'train_tree.csv', sep=' ')
-TestA_data = pd.read_csv(tree_data_path+'text_tree.csv', sep=' ')
+TestA_data = pd.read_csv(tree_data_path+'test_tree.csv', sep=' ')
 
 numerical_cols = Train_data.columns
 feature_cols = [col for col in numerical_cols if col not in ['price','SaleID']]
@@ -471,7 +481,7 @@ for fold_, (trn_idx, val_idx) in enumerate(folds.split(X_data, Y_data)):
 print("lightgbm score: {:<8.8f}".format(mean_absolute_error(np.expm1(oof_lgb), np.expm1(Y_data))))
 
 
-# output_path = path + 'user_data\\'
+# output_path = path + r'\\user_data\\'
 # 测试集输出
 predictions = predictions_lgb
 predictions[predictions < 0] = 0
@@ -526,7 +536,7 @@ for train_index, vali_index in kfold:
 
 print("catboost score: {:<8.8f}".format(mean_absolute_error(np.expm1(oof_cb), np.expm1(Y_data))))
 
-# output_path = path + 'user_data\\'
+# output_path = path + r'\\user_data\\'
 # 测试集输出
 predictions = predictions_cb
 predictions[predictions < 0] = 0
@@ -547,8 +557,8 @@ sub.to_csv(output_path+'cab_train.csv', index=False)
 神经网络
 """
 ## 读取神经网络模型数据
-path = os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + ".")
-tree_data_path = path+'user_data\\'
+# path = os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + ".")
+# tree_data_path = output_path+ r'\\user_data\\'
 Train_NN_data = pd.read_csv(tree_data_path+'train_nn.csv', sep=' ')
 Test_NN_data = pd.read_csv(tree_data_path+'test_nn.csv', sep=' ')
 
@@ -569,18 +579,18 @@ def scheduler(epoch):
     # 到规定的epoch，学习率减小为原来的1/10
 
     if epoch  == 1400 :
-        lr = K.get_value(model.optimizer.lr)
-        K.set_value(model.optimizer.lr, lr * 0.1)
+        lr = K.backend.get_value(model.optimizer.lr)
+        K.backend.set_value(model.optimizer.lr, lr * 0.1)
         print("lr changed to {}".format(lr * 0.1))
     if epoch  == 1700 :
-        lr = K.get_value(model.optimizer.lr)
-        K.set_value(model.optimizer.lr, lr * 0.1)
+        lr = K.backend.get_value(model.optimizer.lr)
+        K.backend.set_value(model.optimizer.lr, lr * 0.1)
         print("lr changed to {}".format(lr * 0.1))
     if epoch  == 1900 :
-        lr = K.get_value(model.optimizer.lr)
-        K.set_value(model.optimizer.lr, lr * 0.1)
+        lr = K.backend.get_value(model.optimizer.lr)
+        K.backend.set_value(model.optimizer.lr, lr * 0.1)
         print("lr changed to {}".format(lr * 0.1))
-    return K.get_value(model.optimizer.lr)
+    return K.backend.get_value(model.optimizer.lr)
 
 reduce_lr = LearningRateScheduler(scheduler)
 
@@ -615,7 +625,7 @@ for train_index, vali_index in kfold:
 
 print("NN score: {:<8.8f}".format(mean_absolute_error(oof_nn, y)))
 
-# output_path = path + 'user_data\\'
+# output_path = path + r'\\user_data\\'
 # 测试集输出
 predictions = predictions_nn
 predictions[predictions < 0] = 0
@@ -632,7 +642,7 @@ sub['price'] = oof_nn
 sub.to_csv(output_path+'nn_train.csv', index=False)
 
 
-tree_data_path = path+'user_data\\'
+# tree_data_path = path+ r'\\user_data\\'
 
 #导入树模型lgb预测数据，进行二层stacking输出
 predictions_lgb = np.array(pd.read_csv(tree_data_path+'lgb_test.csv')['price'])
@@ -644,7 +654,7 @@ oof_cb = np.array(pd.read_csv(tree_data_path+'cab_train.csv')['price'])
 
 #读取price，对验证集进行评估
 Train_data = pd.read_csv(tree_data_path+'train_tree.csv', sep=' ')
-TestA_data = pd.read_csv(tree_data_path+'text_tree.csv', sep=' ')
+TestA_data = pd.read_csv(tree_data_path+'test_tree.csv', sep=' ')
 Y_data = Train_data['price']
 
 train_stack = np.vstack([oof_lgb, oof_cb]).transpose()
@@ -691,34 +701,3 @@ sub['SaleID'] = TestA_data.SaleID
 predictions[predictions < 0] = 0
 sub['price']=predictions
 sub.to_csv(p_output_path+'predictions.csv', index=False)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# n_train_data = train_data.select_dtypes(exclude='object').columns
-# # print(n_train_data)
-# feature_col = [col for col in n_train_data if col not in['SaleID','name','regDate','creatDate','price','model','brand','regionCode','seller','offerType','v_13','v_14']]
-# # print(feature_col)
-# x_train_data = train_data[feature_col]
-# x_train_data = x_train_data.apply(lambda x: (x - np.mean(x)) / np.std(x))
-# y_train_data = np.log1p(train_data['price'])
-#
-# x_test_data = test_data[feature_col]
-# x_test_data = x_test_data.apply(lambda x: (x - np.mean(x)) / np.std(x))
-# # print(x_train_data)
-# # print(x_test_data)
