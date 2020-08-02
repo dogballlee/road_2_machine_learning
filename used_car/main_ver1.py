@@ -421,7 +421,7 @@ print('NN模型数据已经准备完毕~~~~~~~')
 
 
 #读取模型
-path = os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + ".")
+# path = os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + ".")
 # tree_data_path = path+ r'\\user_data\\'
 Train_data = pd.read_csv(tree_data_path+'train_tree.csv', sep=' ')
 TestA_data = pd.read_csv(tree_data_path+'test_tree.csv', sep=' ')
