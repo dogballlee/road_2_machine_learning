@@ -164,6 +164,13 @@
     <ClCompile Include="23while练习：猜数字.cpp" />
     <ClCompile Include="24dowhile语句.cpp" />
     <ClCompile Include="25dowhile练习：水仙花数.cpp" />
+    <ClCompile Include="26for循环.cpp" />
+    <ClCompile Include="28嵌套循环.cpp" />
+    <ClCompile Include="27练习：敲桌子.cpp" />
+    <ClCompile Include="29练习：乘法口诀表.cpp" />
+    <ClCompile Include="30跳转语句break.cpp" />
+    <ClCompile Include="31continue语句.cpp" />
+    <ClCompile Include="32goto语句.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

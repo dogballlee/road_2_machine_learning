@@ -3,7 +3,7 @@ using namespace std;
 
 
 
-int main() {
+int main25() {
 
 	int num = 100;
 

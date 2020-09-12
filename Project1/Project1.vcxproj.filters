@@ -90,5 +90,26 @@
     <ClCompile Include="25dowhile练习：水仙花数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="26for循环.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="27练习：敲桌子.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="28嵌套循环.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="29练习：乘法口诀表.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="30跳转语句break.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="31continue语句.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="32goto语句.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
