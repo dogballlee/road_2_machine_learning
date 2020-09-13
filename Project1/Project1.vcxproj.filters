@@ -111,5 +111,20 @@
     <ClCompile Include="32goto语句.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="33数组.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="34一维数组数组名.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="35练习：5只小猪称体重.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="36练习：数组元素逆置.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="37冒泡排序.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

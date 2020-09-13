@@ -171,6 +171,11 @@
     <ClCompile Include="30跳转语句break.cpp" />
     <ClCompile Include="31continue语句.cpp" />
     <ClCompile Include="32goto语句.cpp" />
+    <ClCompile Include="33数组.cpp" />
+    <ClCompile Include="34一维数组数组名.cpp" />
+    <ClCompile Include="35练习：5只小猪称体重.cpp" />
+    <ClCompile Include="36练习：数组元素逆置.cpp" />
+    <ClCompile Include="37冒泡排序.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
