@@ -3,7 +3,7 @@ using namespace std;
 
 
 
-int main() {
+int main37() {
 
 	int t = 0;
 	int arr[] = { 4,2,8,0,5,7,1,3,9 };

@@ -176,6 +176,9 @@
     <ClCompile Include="35练习：5只小猪称体重.cpp" />
     <ClCompile Include="36练习：数组元素逆置.cpp" />
     <ClCompile Include="37冒泡排序.cpp" />
+    <ClCompile Include="38二维数组.cpp" />
+    <ClCompile Include="39二维数组数组名.cpp" />
+    <ClCompile Include="40二维数组案例：考试成绩统计.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
