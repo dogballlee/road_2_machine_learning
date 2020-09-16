@@ -135,5 +135,19 @@
     <ClCompile Include="40二维数组案例：考试成绩统计.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="41函数：定义、样式、声明.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="42函数的分文件编写.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="swap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="swap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

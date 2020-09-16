@@ -179,6 +179,12 @@
     <ClCompile Include="38二维数组.cpp" />
     <ClCompile Include="39二维数组数组名.cpp" />
     <ClCompile Include="40二维数组案例：考试成绩统计.cpp" />
+    <ClCompile Include="41函数：定义、样式、声明.cpp" />
+    <ClCompile Include="42函数的分文件编写.cpp" />
+    <ClCompile Include="swap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="swap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
