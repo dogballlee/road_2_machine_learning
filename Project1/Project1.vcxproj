@@ -181,7 +181,12 @@
     <ClCompile Include="40二维数组案例：考试成绩统计.cpp" />
     <ClCompile Include="41函数：定义、样式、声明.cpp" />
     <ClCompile Include="42函数的分文件编写.cpp" />
+    <ClCompile Include="43指针的定义和作用.cpp" />
+    <ClCompile Include="45空指针.cpp" />
+    <ClCompile Include="46野指针.cpp" />
+    <ClCompile Include="47const修饰指针.cpp" />
     <ClCompile Include="swap.cpp" />
+    <ClCompile Include="44指针所占内存空间.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h" />

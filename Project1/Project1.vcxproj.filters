@@ -144,6 +144,21 @@
     <ClCompile Include="swap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="43指针的定义和作用.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="44指针所占内存空间.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="46野指针.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="45空指针.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="47const修饰指针.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h">
