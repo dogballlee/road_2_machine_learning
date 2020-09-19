@@ -159,6 +159,15 @@
     <ClCompile Include="47const修饰指针.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="48指针和数组.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="49指针和函数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="50练习：指针数组函数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h">
