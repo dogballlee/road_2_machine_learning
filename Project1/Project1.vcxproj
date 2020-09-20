@@ -188,6 +188,10 @@
     <ClCompile Include="48指针和数组.cpp" />
     <ClCompile Include="49指针和函数.cpp" />
     <ClCompile Include="50练习：指针数组函数.cpp" />
+    <ClCompile Include="51结构体.cpp" />
+    <ClCompile Include="52结构体数组.cpp" />
+    <ClCompile Include="53结构体指针.cpp" />
+    <ClCompile Include="54结构体嵌套结构体.cpp" />
     <ClCompile Include="swap.cpp" />
     <ClCompile Include="44指针所占内存空间.cpp" />
   </ItemGroup>

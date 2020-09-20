@@ -168,6 +168,18 @@
     <ClCompile Include="50练习：指针数组函数.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="51结构体.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="52结构体数组.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="53结构体指针.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="54结构体嵌套结构体.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h">
