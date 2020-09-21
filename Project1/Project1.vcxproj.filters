@@ -180,6 +180,9 @@
     <ClCompile Include="54结构体嵌套结构体.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="55结构体做函数参数.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h">
