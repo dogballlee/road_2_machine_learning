@@ -193,6 +193,8 @@
     <ClCompile Include="53结构体指针.cpp" />
     <ClCompile Include="54结构体嵌套结构体.cpp" />
     <ClCompile Include="55结构体做函数参数.cpp" />
+    <ClCompile Include="56结构体中的const使用场景.cpp" />
+    <ClCompile Include="57结构体案例.cpp" />
     <ClCompile Include="swap.cpp" />
     <ClCompile Include="44指针所占内存空间.cpp" />
   </ItemGroup>
