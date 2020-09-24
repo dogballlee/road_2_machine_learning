@@ -5,7 +5,6 @@ using namespace std;
 struct student
 {
 	string sname;
-	int age;
 	int score;
 };
 
@@ -15,6 +14,7 @@ struct teacher
 	string tname;
 	struct student sarray[5];
 };
+
 
 //给老师和学生赋值的函数
 void allocatespace(struct teacher tarray[], int len) 
@@ -31,12 +31,12 @@ void allocatespace(struct teacher tarray[], int len)
 		{
 			tarray[i].sarray[j].sname = "student_";
 			tarray[i].sarray[j].sname += nameseed[j];
-
 			tarray[i].sarray[j].score = 60;
 		}
 		
 	}
 }
+
 
 
 //打印所有信息
@@ -47,8 +47,7 @@ void printinfo(struct teacher tarray[], int len)
 		cout << "老师姓名：" << tarray[i].tname << endl;
 		for (int j = 0; j < 5; j++) 
 		{
-			cout << "老师所带学生姓名： " << tarray[i].sarray[j].sname 
-				<< "考试分数： " << tarray[i].sarray[j].score << endl;
+			cout << "老师所带学生姓名： " << tarray[i].sarray[j].sname << "考试分数： " << tarray[i].sarray[j].score << endl;
 		}
 	}
 }
@@ -59,13 +58,13 @@ int main()
 	//创建3名老师的数组
 	struct teacher tarray[3];
 
-
 	//通过函数给3名老师的信息赋值，并给老师带的学生信息赋值
 	int len = sizeof(tarray) / sizeof(tarray[0]);
-	allocatespace(tarray, 3);
+	allocatespace(tarray, len);
 
-		//打印所有老师及所带的学生信息;
-		printinfo(tarray, len);
+	//打印所有老师及所带的学生信息;
+	printinfo(tarray, len);
+
 	system("pause");
 
 	return 0;
