@@ -1,5 +1,6 @@
 #include<iostream>
 using namespace std;
+#include<ctime>
 
 //定义学生结构体
 struct student
@@ -14,7 +15,6 @@ struct teacher
 	string tname;
 	struct student sarray[5];
 };
-
 
 //给老师和学生赋值的函数
 void allocatespace(struct teacher tarray[], int len) 
@@ -31,7 +31,8 @@ void allocatespace(struct teacher tarray[], int len)
 		{
 			tarray[i].sarray[j].sname = "student_";
 			tarray[i].sarray[j].sname += nameseed[j];
-			tarray[i].sarray[j].score = 60;
+			int random = rand() % 61 + 40;	//40~100之间的一个随机数
+			tarray[i].sarray[j].score = random;
 		}
 		
 	}
@@ -47,14 +48,18 @@ void printinfo(struct teacher tarray[], int len)
 		cout << "老师姓名：" << tarray[i].tname << endl;
 		for (int j = 0; j < 5; j++) 
 		{
-			cout << "老师所带学生姓名： " << tarray[i].sarray[j].sname << "考试分数： " << tarray[i].sarray[j].score << endl;
+			cout << "\t老师所带学生姓名： " << tarray[i].sarray[j].sname << "\t考试分数： " << tarray[i].sarray[j].score << endl;
 		}
 	}
 }
 
 
 int main()
+
 {
+	//随机数种子(制造真随机数，跟随当前时间)
+	srand((unsigned int)time(NULL));
+
 	//创建3名老师的数组
 	struct teacher tarray[3];
 
