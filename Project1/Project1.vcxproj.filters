@@ -189,6 +189,9 @@
     <ClCompile Include="57结构体案例.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="58结构体案例2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="swap.h">

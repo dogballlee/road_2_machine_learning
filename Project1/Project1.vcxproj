@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -196,6 +197,7 @@
     <ClCompile Include="55结构体做函数参数.cpp" />
     <ClCompile Include="56结构体中的const使用场景.cpp" />
     <ClCompile Include="57结构体案例.cpp" />
+    <ClCompile Include="58结构体案例2.cpp" />
     <ClCompile Include="swap.cpp" />
     <ClCompile Include="44指针所占内存空间.cpp" />
   </ItemGroup>

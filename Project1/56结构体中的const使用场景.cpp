@@ -28,7 +28,7 @@ void printstudent1(const student *s)
 //但是，以上代码存在风险，如果不小心输入了一段赋值语句呢？那可是会改变实参的值的，有点野哦
 //得想个辙，此处有请const大佬
 
-int main57()
+int main56()
 {
 	struct student s = { "张三" ,20,100 };
 

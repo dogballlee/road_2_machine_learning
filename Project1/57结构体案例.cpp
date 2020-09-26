@@ -1,6 +1,8 @@
 #include<iostream>
-using namespace std;
+#include<string>
 #include<ctime>
+using namespace std;
+
 
 //定义学生结构体
 struct student
@@ -20,11 +22,14 @@ struct teacher
 void allocatespace(struct teacher tarray[], int len) 
 {
 	string nameseed = "ABCDE";
+
+
 	//开始给老师赋值
 	for (int i = 0; i < len; i++) 
 	{
 		tarray[i].tname = "teacher_";
-		tarray[i].tname += nameseed[i];
+		tarray[i].tname = tarray[i].tname + nameseed[i];
+
 
 		//通过循环给每名老师所带的学生赋值
 		for (int j = 0; j < 5; j++) 
@@ -54,7 +59,7 @@ void printinfo(struct teacher tarray[], int len)
 }
 
 
-int main()
+int main57()
 
 {
 	//随机数种子(制造真随机数，跟随当前时间)
