@@ -65,7 +65,7 @@ for data, target in tqdm(train_loader):`
 
 
 
-torch训练中的需注意的点
+## torch训练中的需注意的点
 
 正向传播后的梯度是储存在前一step中的，在进行backward()前要先归零，不要搞反了！
 
@@ -79,4 +79,16 @@ torch训练中的需注意的点
 	optimizer.step()
     ......
 ```
+
+
+
+## model.parameters()与model.state_dict()
+
+*model.parameters()*与*model.state_dict()*是Pytorch中用于查看网络参数的方法。一般来说，前者**多见于优化器的初始化**，例如：
+
+![img](https://pic4.zhimg.com/80/v2-5c9bbd19ac058c725550d6a800ca19b7_720w.jpg)
+
+后者**多见于模型的保存**，如：
+
+![img](https://pic1.zhimg.com/80/v2-a52f44627d28ae6339adae1950a0de34_720w.jpg)
 
