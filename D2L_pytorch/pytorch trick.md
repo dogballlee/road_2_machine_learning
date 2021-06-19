@@ -47,7 +47,7 @@ torchvision官方提供的不同模型在imagenet数据集上的错误率，可�
 
 
 
-## tqdm是个骚道具
+## tqdm是个骚道具（待补完）
 
 `import tqdm`
 
@@ -91,4 +91,43 @@ for data, target in tqdm(train_loader):`
 后者**多见于模型的保存**，如：
 
 ![img](https://pic1.zhimg.com/80/v2-a52f44627d28ae6339adae1950a0de34_720w.jpg)
+
+## sklearn中 KFold 和 StratifiedKFold 差别
+
+**KFold划分数据集**：根据n_split直接进行顺序划分，不考虑数据label分布
+**StratifiedKFold划分数据集**：划分后的训练集和验证集中类别分布尽量和原数据集一样
+
+**example：**
+
+```python
+from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
+import numpy as np
+
+X = np.array([[10, 1], [20, 2], [30, 3], [40, 4], [50, 5], [60, 6], [70, 7], [80, 8], [90, 9], [100, 10], [90, 9], [100, 10]])
+
+# 两个类别：1:1
+
+Y = np.array([1,1,1,1,1,1,2,2,2,2,2,2])
+
+print("Start Testing KFold...")
+
+# KFold划分数据集的原理：根据n_split直接进行顺序划分
+
+`kfolds = KFold(n_splits=3, shuffle=False)`
+`for (trn_idx, val_idx) in kfolds.split(X, Y):`
+    `print((trn_idx, val_idx))`
+    `print((len(trn_idx), len(val_idx)))`
+
+
+`print('\n' + "Start Testing StratifiedKFold...")`
+
+# `StratifiedKFold: 抽样后的训练集和验证集的样本分类比例和原有的数据集尽量是一样的`
+
+`stratifiedKFolds = StratifiedKFold(n_splits=3, shuffle=False)`
+`for (trn_idx, val_idx) in stratifiedKFolds.split(X, Y):`
+    `print((trn_idx, val_idx))`
+    `print((len(trn_idx), len(val_idx)))`
+
+```
 
