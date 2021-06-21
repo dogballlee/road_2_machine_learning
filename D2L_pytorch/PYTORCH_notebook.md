@@ -103,7 +103,7 @@ nn包中有多种损失函数，nn.MSELoss是比较简单的一种，它计算�
 
 文本：NLTK\SpaCy等
 
-特别的，对于视觉方面可以使用torchvision包，其中包含了Imagenet\CIFAR10\MNIST等常用数据加载器data loaders。另外还有对图像数据转换的操作，torchvision.datasets和torch.utils.data.DataLoader
+特别的，对于视觉方面可以使用torchvision包，其中包含了针对Imagenet\CIFAR10\MNIST等常用数据集的加载器(data loaders)。另外还有对图像数据转换的操作，<u>torchvision.datasets</u>和<u>torch.utils.data.DataLoader</u>
 
 
 
