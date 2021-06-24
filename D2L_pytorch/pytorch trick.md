@@ -131,3 +131,28 @@ print("Start Testing KFold...")
 
 ```
 
+## 数据增强库「albumentations」----值得学习
+
+1. 我的官方地址在 github链接：
+
+   https://github.com/albumentations-team/albumentations
+
+2. 我的API（文档）地址在
+
+   https://albumentations.ai/docs/
+
+3. 我是负责处理图像的一个库，可用于所有数据类型：图像（RBG图像，灰度图像，多光谱图像），分割mask，边界框和关键点
+
+4. 我大概有70多种不同的图像处理方法,相比torch自带的，这个库函数有更多的对图像的预处理的办法
+
+5. 我的特点就是**快**：在相同的对图像的处理下，我的速度就是比其他处理方式更快👍
+
+   ![图片](https://mmbiz.qpic.cn/mmbiz_png/UgCGraybEsStqiaq02J7c8qvOdLHuD4EcCOMYoHbD9dzVxibiaapeudSaZBicibXZicFcQicdJrEYWJnb20xqU02KGX0g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+   这个图中，可以看到albumentations的处理方法中，很多都是速度最快的。
+
+6. 我可以与流行的深度学习框架（例如PyTorch和TensorFlow）一起使用。顺便说一句，我还是PyTorch生态系统的一部分
+
+7. 对Pytorch很友好，而且这个库函数是kaggle master制作的
+
+8. 广泛用于工业，深度学习研究，机器学习竞赛和开源项目。就是大佬都爱用的一个库，在kaggle比赛上都有我的身影。
