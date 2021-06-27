@@ -156,3 +156,17 @@ print("Start Testing KFold...")
 7. 对Pytorch很友好，而且这个库函数是kaggle master制作的
 
 8. 广泛用于工业，深度学习研究，机器学习竞赛和开源项目。就是大佬都爱用的一个库，在kaggle比赛上都有我的身影。
+
+
+
+## tensorboard 无法连接问题
+
+切换至log目录
+
+输入以下命令
+
+**tensorboard --logdir=D:\XXX\log --host=127.0.0.1**
+
+将会得到一个地址
+
+复制地址到浏览器即可
