@@ -1,10 +1,17 @@
 import torch
+import numpy as np
 from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch import nn, optim
 from lenet5 import LeNet5
 from tqdm import tqdm
+from torch.utils import tensorboard as tb
+import tensorboard
+
+log_dir_train='log_train'
+train_writer = tb.SummaryWriter(log_dir=log_dir_train, comment='LeNet5_train')
+
 
 def main():
     batch_siz = 32
@@ -33,8 +40,14 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr = 2e-5)
     print(model)
     n_epochs = 20
+    model_path = './pre_res_model.ckpt'
 
     best_acc = 0.0
+
+    input_shape = (32, 32)
+    graph_inputs = torch.from_numpy(np.random.rand(1, 3, input_shape[0], input_shape[1])).type(torch.FloatTensor).cuda()
+    train_writer.add_graph(model, (graph_inputs,))
+
 
     for epoch in range(n_epochs):
         model.train()
@@ -55,6 +68,7 @@ def main():
 
         train_loss = sum(train_loss) / len(train_loss)
         train_acc = sum(train_accs) / len(train_accs)
+        train_writer.add_scalar('train_loss', train_loss, epoch)
         print(f"[ Train | {epoch + 1:03d}/{n_epochs:03d} ] loss = {train_loss:.5f}, acc = {train_acc:.5f}")
 
         model.eval()
@@ -75,10 +89,10 @@ def main():
         valid_acc = sum(valid_accs) / len(valid_accs)
         print(f"[ Test | {epoch + 1:03d}/{n_epochs:03d} ] loss = {valid_loss:.5f}, acc = {valid_acc:.5f}")
 
-        # if valid_acc > best_acc:
-        #     best_acc = valid_acc
-        #     torch.save(model.state_dict(), model_path)
-        #     print('saving model with acc {:.3f}'.format(best_acc))
+        if valid_acc > best_acc:
+            best_acc = valid_acc
+            torch.save(model.state_dict(), model_path)
+            print('saving model with acc {:.3f}'.format(best_acc))
 
 if __name__ == '__main__':
     main()
