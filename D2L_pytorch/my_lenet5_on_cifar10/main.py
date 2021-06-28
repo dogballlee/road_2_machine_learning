@@ -7,7 +7,8 @@ from torch import nn, optim
 from lenet5 import LeNet5
 from tqdm import tqdm
 from torch.utils import tensorboard as tb
-import tensorboard
+from torchvision import models
+# import tensorboard
 
 log_dir_train='log_train'
 train_writer = tb.SummaryWriter(log_dir=log_dir_train, comment='LeNet5_train')
@@ -15,6 +16,10 @@ train_writer = tb.SummaryWriter(log_dir=log_dir_train, comment='LeNet5_train')
 
 def main():
     batch_siz = 32
+    learning_rate = 1e-4
+    weight_decay = 1e-3
+    n_epochs = 20
+
     cifar_train = datasets.CIFAR10('cifar', True, transform = transforms.Compose([
         transforms.Resize((32, 32)),
         transforms.ToTensor(),
@@ -34,19 +39,22 @@ def main():
     print('x:', x.shape, 'label:', labels.shape)
 
     device = torch.device('cuda')
-    model = LeNet5().to(device)
+    # model = LeNet5.to(device)
+    model = models.resnet50(pretrained=True).to(device)
 
     criterion = nn.CrossEntropyLoss().to(device)
-    optimizer = optim.Adam(model.parameters(), lr = 2e-5)
+    optimizer = optim.Adam(model.parameters(), lr = learning_rate, weight_decay=weight_decay)
     print(model)
-    n_epochs = 20
-    model_path = './pre_res_model.ckpt'
 
+    model_path = './pre_res_model.ckpt'
     best_acc = 0.0
 
     input_shape = (32, 32)
+    #喂1个假样本(3通道，高宽和input_shape相同)给summary_writer，仅用于展示网络结构
     graph_inputs = torch.from_numpy(np.random.rand(1, 3, input_shape[0], input_shape[1])).type(torch.FloatTensor).cuda()
-    train_writer.add_graph(model, (graph_inputs,))
+    train_writer.add_graph(model, (graph_inputs))
+    # torch.save(model,'my_LeNet5.pt')
+    torch.save(model,'resnet18.pt')
 
 
     for epoch in range(n_epochs):
