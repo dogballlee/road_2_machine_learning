@@ -180,3 +180,7 @@ tensorboard --logdir=D:\XXX\log --host=127.0.0.1
 ## TIMM库——torch.models之外的可选项
 
 相较于torch.models，TIMM（py**T**orch-**IM**age-**M**odels）是一个优秀的可选项，拥有远大于models的各个用于图像分类的预训练模型(相比之下也比较新)
+
+## python中的self究竟指的是啥？
+
+答：实例化后的对象本身
