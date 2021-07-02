@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Apr  8 12:14:29 2020
-@author: pang
-"""
+
 
 import cv2
 import numpy as np
