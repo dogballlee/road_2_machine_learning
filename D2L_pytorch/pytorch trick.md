@@ -47,6 +47,8 @@ torchvision官方提供的不同模型在imagenet数据集上的错误率，可�
 
 
 
+
+
 ## tqdm是个骚道具（待补完）
 
 `import tqdm`
@@ -62,6 +64,8 @@ for data, target in tqdm(train_loader):`
 （省略号中为循环内的各种操作，可以正常对batch内的data进行后续处理，并显示进度条）
 
 原理：这种用法相当于在dataloader上对每个batch和batch总数做的进度条
+
+
 
 
 
@@ -82,6 +86,8 @@ for data, target in tqdm(train_loader):`
 
 
 
+
+
 ## model.parameters()与model.state_dict()
 
 *model.parameters()*与*model.state_dict()*是Pytorch中用于查看网络参数的方法。一般来说，前者**多见于优化器的初始化**，例如：
@@ -91,6 +97,10 @@ for data, target in tqdm(train_loader):`
 后者**多见于模型的保存**，如：
 
 ![img](https://pic1.zhimg.com/80/v2-a52f44627d28ae6339adae1950a0de34_720w.jpg)
+
+
+
+
 
 ## sklearn中 KFold 和 StratifiedKFold 差别
 
@@ -131,6 +141,10 @@ print("Start Testing KFold...")
 
 ```
 
+
+
+
+
 ## 数据增强库「albumentations」----值得学习
 
 1. 我的官方地址在 github链接：
@@ -159,6 +173,8 @@ print("Start Testing KFold...")
 
 
 
+
+
 ## tensorboard 无法连接问题
 
 切换至log目录
@@ -181,6 +197,57 @@ tensorboard --logdir=D:\XXX\log --host=127.0.0.1
 
 相较于torch.models，TIMM（py**T**orch-**IM**age-**M**odels）是一个优秀的可选项，拥有远大于models的各个用于图像分类的预训练模型(相比之下也比较新)
 
+
+
 ## python中的self究竟指的是啥？
 
-答：实例化后的对象本身
+Answer：实例化后的对象本身
+
+
+
+
+
+## nn.Conv2d与nn.functional.conv2d
+
+torch.nn.Conv2d主要是在各种组合的torch.nn.Sequential中使用，构建CNN模型。torch.nn.functional.conv2d更多是在各种自定义中使用，需要明确指出输入与权重filters参数。
+
+
+
+
+
+## W×W的矩阵经过卷积操作后输出N×N的矩阵，尺寸怎样计算？
+
+输入图片大小 **W×W**
+卷积核大小 **F×F**
+步长 **S**
+padding的像素数 **P**
+于是我们可以得出计算公式为：
+**N = (W − F + 2P )/S+1**
+
+输出图片大小为 **N×N**
+以resnet50为例，输入为[1,3,224,224]，其中1为batchsize，3为通道数，224为height和width。
+
+经过第一层卷积后，其大小为[1,64,112,112]
+
+**例：**
+
+```python
+nn.Conv2d(in_channels, out_channels, kernel_size=7, stride=2, padding=3, bias=False)
+```
+
+**解释：**
+1为batch size，不改变。
+对于通道数，会生成与设定的输出通道个数相同个数的卷积核，对图片进行卷积，即卷积核的个数等于输出特征图的通道数。
+得到最终输出大小为[1,64,112,112]
+(W − F + 2P )相当于计算除了第一次卷积后剩下的可用来卷积的大小
+(W − F + 2P )/S为按照S大小的步长在刚刚得到的大小上可以向后移动多少次，即还可以做几次卷积
+因为不包括第一次卷积，所以再加上一个1，
+即N = (W − F + 2P )/S+1
+输出大小 = （图片宽或高 - 卷积核大小 + padding大小）/ 步长 + 1
+对于宽和高不同的图片可分别用上述公式计算，得到最终的输出大小。
+
+卷积动态图解参考：
+https://cs231n.github.io/assets/conv-demo/index.html
+
+
+
