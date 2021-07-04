@@ -251,3 +251,17 @@ https://cs231n.github.io/assets/conv-demo/index.html
 
 
 
+## darknet-53得名原因
+
+darknet-53作为提取特征的backbone被使用于YOLOv3中，其来源于darknet-19（首次使用于YOLOv2，思路源于resnet），53与19分别指该网络结构中卷积层的个数（2 + 1×2 + 1 + 2×2 + 1 + 8×2 + 1 + 8×2 + 1 + 4×2 + 1 = 53 按照顺序数，<u>最后的Connected是全连接层也算卷积层</u>，一共53个）
+
+**图1：**
+
+![img](https://img-blog.csdn.net/20180726102742325?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTQxMDk3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+**图2：**
+
+![img](https://img-blog.csdnimg.cn/2019040211084050.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTQxMDk3,size_16,color_FFFFFF,t_70)
+
+在**图2**中我们能够很清晰的看到三个预测层分别来自的什么地方，以及Concatenate层与哪个层进行拼接。**注意Convolutional是指Conv2d+BN+LeakyReLU，和Darknet53图中的一样，而生成预测结果的最后三层都只是Conv2d**
+
