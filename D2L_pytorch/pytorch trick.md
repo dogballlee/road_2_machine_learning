@@ -215,7 +215,7 @@ torch.nn.Conv2d主要是在各种组合的torch.nn.Sequential中使用，构建C
 
 
 
-## W×W的矩阵经过卷积操作后输出N×N的矩阵，尺寸怎样计算？
+## 卷积操作后的尺寸怎样计算？
 
 输入图片大小 **W×W**
 卷积核大小 **F×F**
@@ -265,3 +265,6 @@ darknet-53作为提取特征的backbone被使用于YOLOv3中，其来源于darkn
 
 在**图2**中我们能够很清晰的看到三个预测层分别来自的什么地方，以及Concatenate层与哪个层进行拼接。**注意Convolutional是指Conv2d+BN+LeakyReLU，和Darknet53图中的一样，而生成预测结果的最后三层都只是Conv2d**
 
+## 卷积神经网络三大特征
+
+卷积网络联合了三个架构特征导致了转换、拉伸和扭曲的不变形：1）**局部感受野**（Local Receptive Fields）；2）**共享权重**（Shared Weights）；3）**时间和空间的二次抽样**（Spatial or Temporal Subsampling）。
