@@ -69,7 +69,7 @@ class Game:
 
                 # 预测值
                 _Qs = self.q_net(_state)
-                _Q = torch.gather(_Qs, 1, _action)
+                _Q = torch.gather(_Qs, 1, _action)      # gather，沿dim指定的轴收集值
                 # 目标值
                 _next_Qs = self.q_net(_next_state)
                 _max_Q = torch.max(_next_Qs, dim=1, keepdim=True)[0]
