@@ -47,6 +47,13 @@ torchvision官方提供的不同模型在imagenet数据集上的错误率，可�
 
 
 
+## MNIST数据集结构
+
+训练数据集：train-images-idx3-ubyte.gz （9.45 MB，包含60,000个样本）。
+训练数据集标签：train-labels-idx1-ubyte.gz（28.2 KB，包含60,000个标签）。
+测试数据集：t10k-images-idx3-ubyte.gz（1.57 MB ，包含10,000个样本）。
+测试数据集标签：t10k-labels-idx1-ubyte.gz（4.43 KB，包含10,000个样本的标签）。
+
 
 
 ## tqdm是个骚道具（待补完）
@@ -265,6 +272,24 @@ darknet-53作为提取特征的backbone被使用于YOLOv3中，其来源于darkn
 
 在**图2**中我们能够很清晰的看到三个预测层分别来自的什么地方，以及Concatenate层与哪个层进行拼接。**注意Convolutional是指Conv2d+BN+LeakyReLU，和Darknet53图中的一样，而生成预测结果的最后三层都只是Conv2d**
 
+
+
 ## 卷积神经网络三大特征
 
 卷积网络联合了三个架构特征导致了转换、拉伸和扭曲的不变形：1）**局部感受野**（Local Receptive Fields）；2）**共享权重**（Shared Weights）；3）**时间和空间的二次抽样**（Spatial or Temporal Subsampling）。
+
+
+
+## embedding(嵌入层)究竟是个啥
+
+为了解决特征稀疏造成的一系列问题(<u>稀疏表示存在一些问题，这些问题可能使模型难以有效学习。主要问题是构造的ont-hot vector太大以及vector之间距离刻画问题</u>)，而采取的将大型稀疏向量转换为保留语义关系的低维空间的方法。常用的方法有：
+
+​				**主成分分析（PCA）**：已用于创建单词embedding。给定一组像词袋向量一样的实例，PCA试图找到可以折叠成单个维度的高度相关的维度。
+
+​				**Word2vec**：依赖于分布假设(distributional hypothesis)来将语义相似的词映射到几何上相近的embedding向量。
+
+
+
+## DL常用的激活函数
+
+![img](https://img-blog.csdnimg.cn/20210522090207129.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2NTEwMjQ1,size_16,color_FFFFFF,t_70)
