@@ -274,12 +274,6 @@ darknet-53作为提取特征的backbone被使用于YOLOv3中，其来源于darkn
 
 
 
-## 卷积神经网络三大特征
-
-卷积网络联合了三个架构特征导致了转换、拉伸和扭曲的不变形：1）**局部感受野**（Local Receptive Fields）；2）**共享权重**（Shared Weights）；3）**时间和空间的二次抽样**（Spatial or Temporal Subsampling）。
-
-
-
 ## embedding(嵌入层)究竟是个啥
 
 为了解决特征稀疏造成的一系列问题(<u>稀疏表示存在一些问题，这些问题可能使模型难以有效学习。主要问题是构造的ont-hot vector太大以及vector之间距离刻画问题</u>)，而采取的将大型稀疏向量转换为保留语义关系的低维空间的方法。常用的方法有：
@@ -293,3 +287,68 @@ darknet-53作为提取特征的backbone被使用于YOLOv3中，其来源于darkn
 ## DL常用的激活函数
 
 ![img](https://img-blog.csdnimg.cn/20210522090207129.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2NTEwMjQ1,size_16,color_FFFFFF,t_70)
+
+
+
+# @staticmethod和@classmethod的用法
+
+**一般来说，要使用某个类的方法，需要先实例化一个对象再调用方法。**
+**而使用@staticmethod或@classmethod，就可以不需要实例化，直接类名.方法名()来调用。**
+这有利于组织代码，把某些应该属于某个类的函数给放到那个类里去，同时有利于命名空间的整洁。
+
+区别在于：
+
+- @staticmethod不需要表示自身对象的self和自身类的cls参数，就跟使用函数一样。
+
+- @classmethod也不需要self参数，但第一个参数需要是表示自身类的cls参数。
+
+    如果在@staticmethod中要调用到这个类的一些属性方法，只能直接类名.属性名或类名.方法名。
+    而@classmethod因为持有cls参数，可以来调用类的属性，类的方法，实例化对象等，避免硬编码。
+
+
+
+## 交叉熵和相对熵（KL散度）？
+
+KL散度是两个概率分布P和Q差别的非对称性的度量。典型情况下，P表示数据的真实分布，Q表示数据的理论分布，模型分布，或P的近似分布。
+
+![[公式]](https://www.zhihu.com/equation?tex=D_%7BKL%7D%28P%7C%7CQ%29%3D%5Csum_iP%28i%29%5Clog%5Cfrac%7BP%28i%29%7D%7BQ%28i%29%7D%3D%5Csum_iP%28i%29%5Clog%7BP%28i%29%7D-%5Csum_iP%28i%29%5Clog%7BQ%28i%29%7D)
+
+这里注意：由于P和Q在公式中的地位不是相等的，所以 ![[公式]](https://www.zhihu.com/equation?tex=D_%7BKL%7D%28P%7C%7CQ%29%5Cneq+D_%7BKL%7D%28Q%7C%7CP%29)。在机器学习中，由于真实的概率分布是固定的，前半部分是个常数。那么对KL散度的优化就相当于优化后半部分。
+
+相对熵公式的后半部分就是交叉熵
+
+![[公式]](https://www.zhihu.com/equation?tex=CrossEntropy%3D-%5Csum_iP%28i%29%5Clog%7BQ%28i%29%7D)
+
+
+
+## 卷积特点总结
+
+卷积网络联合了三个架构特征导致了转换、拉伸和扭曲的不变形：
+
+​		（1）**局部感受野**（Local Receptive Fields）；
+
+​		（2）**共享权重**（Shared Weights）；
+
+​		（3）**时间和空间的二次抽样**（Spatial or Temporal Subsampling）。
+
+ 
+
+卷积的作用：
+
+　　（1）引入稀疏或局部连接，约减不必要的权值连接
+
+　　（2）权值共享，减少参数量
+
+　　（3）平移不变性
+
+　　（4）避免过拟合现象
+
+ 
+
+池化的作用：
+
+　　（1）减少计算量，刻画平移不变性
+
+　　（2）约减下一层输入的维数（参数量降低）
+
+　　（3）避免过拟合
