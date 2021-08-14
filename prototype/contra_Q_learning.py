@@ -11,7 +11,7 @@ class Q_net(nn.Sequential):
         nn.ReLU(),
         nn.Linear(256, 128),
         nn.ReLU(),
-        nn.Linear(128, 5)
+        nn.Linear(128, 9)
     )
 
 
@@ -21,6 +21,16 @@ class Q_net(nn.Sequential):
 class game:
     def __init__(self, exp_pool_size, explore):
         self.env = retro.make(game='ContraForce-Nes', state='Level1')
-        self.env.reset()
         self.exp_pool = []
         self.exp_pool_size = exp_pool_size
+        self.q_net = QNet()
+        self.explore = explore
+        self.loss_fn = nn.MSELoss
+        self.opt = optim.Adam(self.q_net.parameters())
+
+    def call(self):
+        is_render = True
+        R = 0
+        while True:
+            self.env.render()
+            state = self.env.reset()
