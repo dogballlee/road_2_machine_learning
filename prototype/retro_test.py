@@ -1,21 +1,24 @@
 import retro
+from retro import Actions
 from stable_baselines3 import PPO as PPO
 # from stable_baselines3.common.env_util import make_vec_env, make_atari_env
 
+# if you want t0 import your own ROM, firsts please make sure they are already include in the retro.data.game_list
+# /,then put it together with ur project
 
 class game:
 
     def __init__(self, name, time_steps, level):
         self.game_name = name
         try:
-            self.env = retro.make(name, state=level)
+            self.env = retro.make(name, state=level, use_restricted_actions=Actions.DISCRETE)
         except NameError:
             print('oops, cant find this name in the retro game list, pls check ur input.')
 
         self.total_time_steps = time_steps
 
     def __call__(self):
-        model = PPO('MlpPolicy', self.env, verbose=1)
+        model = PPO('MlpPolicy', self.env, learning_rate=1e-5, verbose=1)
         model.learn(self.total_time_steps)
         model.save('PPO_' + self.game_name)
         del model
@@ -30,5 +33,5 @@ class game:
 
 
 if __name__ == '__main__':
-    g = game('Airstriker-Genesis', 8000, 'Level1')
+    g = game('ContraForce-Nes', 50000, 'Level1')
     g()
