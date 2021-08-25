@@ -1,7 +1,7 @@
 import retro
 from retro import Actions
 from stable_baselines3 import PPO as PPO
-# from stable_baselines3.common.env_util import make_vec_env, make_atari_env
+
 
 # if you want t0 import your own ROM, firsts please make sure they are already include in the retro.data.game_list
 # /,then put it together with ur project
@@ -18,20 +18,19 @@ class game:
         self.total_time_steps = time_steps
 
     def __call__(self):
-        model = PPO('MlpPolicy', self.env, learning_rate=1e-5, verbose=1)
-        model.learn(self.total_time_steps)
+        model = PPO('MlpPolicy', self.env, learning_rate=1e-4).learn(self.total_time_steps)
         model.save('PPO_' + self.game_name)
-        del model
+        del model   # the train model is no longer needed any more...
 
-        model = PPO.load('PPO_' + self.game_name)
-
-        obs = self.env.reset()
-        for i in range(1000):
-            action, _state = model.predict(obs, deterministic=True)
-            obs, reward, done, info = self.env.step(action)
-            self.env.render()
+        # model = PPO.load('PPO_' + self.game_name)
+        #
+        # obs = self.env.reset()
+        # for i in range(1000):
+        #     action, _state = model.predict(obs, deterministic=True)
+        #     obs, reward, done, info = self.env.step(action)
+        #     self.env.render()
 
 
 if __name__ == '__main__':
-    g = game('ContraForce-Nes', 50000, 'Level1')
+    g = game('ContraForce-Nes', 30000, 'Level1')
     g()
