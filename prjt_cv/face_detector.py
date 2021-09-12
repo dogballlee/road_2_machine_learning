@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 things_dtct_path = r'C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python37\\Lib\\site-packages\\cv2\\data\\haarcascade_frontalface_default.xml'      #预先训练好的特征池
-v_path = r'F:\\PORN\\chanel preston\\A day with Chanel Preston\\videos\\Scene5-1-b.mp4'     #美食家Chanel
+v_path = r'F:\\P\\videos\\Scene5-1-b.mp4'     #Chanel
 
 v = cv2.VideoCapture(v_path)
 
